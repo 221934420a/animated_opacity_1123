@@ -42,32 +42,35 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: AnimatedOpacity(
-          // If the widget is visible, animate to 0.0 (invisible).
-          // If the widget is hidden, animate to 1.0 (fully visible).
-          opacity: _visible ? 1.0 : 0.0,
-          duration: const Duration(milliseconds: 500),
-          curve: Curves.elasticOut,
-          // The green box must be a child of the AnimatedOpacity widget.
-          child: const Icon(
-            Icons.flight,
-            size: 100,
-            color: Colors.blue,
-          ),
+      body: AnimatedAlign(
+        // If the widget is visible, animate to 0.0 (invisible).
+        // If the widget is hidden, animate to 1.0 (fully visible).
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.elasticOut,
+        // The green box must be a child of the AnimatedOpacity widget.
+        alignment: selected ? Alignment.center : Alignment.topCenter,
+        child: const Icon(
+          Icons.flight,
+          size: 100,
+          color: Colors.blue,
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Call setState. This tells Flutter to rebuild the
-          // UI with the changes.
+        onEnd: () {
           setState(() {
-            _visible = !_visible;
+            selected = true;
+            print('onEnd');
           });
         },
-        tooltip: 'Toggle Opacity',
-        child: const Icon(Icons.flip),
       ),
+      floatingActionButton: ElevatedButton(
+          onPressed: () {
+            setState(() {
+              // _visible = !_visible;
+              selected = false;
+              print("setState $selected");
+            });
+          },
+          child: const Text("fly")),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
